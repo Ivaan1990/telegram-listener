@@ -8,12 +8,6 @@ import ru.yushin.teleg.teleg.Bot;
 
 
 public class StartBot {
-
-    /**
-     * https://www.youtube.com/watch?v=xv-FYOizUSY&t=221s ЛУЧШИЙ ВИДОС ПО TELEGRAM BOT API
-     * @param args
-     */
-
     public static void main(String[] args) {
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
@@ -23,6 +17,4 @@ public class StartBot {
             e.printStackTrace();
         }
     }
-
 }
-
