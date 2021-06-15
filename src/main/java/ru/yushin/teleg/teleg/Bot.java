@@ -22,8 +22,6 @@ public class Bot extends TelegramLongPollingBot {
     TransferMessagesService transferMessagesServiceTXT;
     TransferMessagesService transferMessagesServiceEXCEL;
 
-    static int COUNT_ROW = 1;
-
     public String getBotUsername() {
         return BOT_NAME;
     }
@@ -55,7 +53,6 @@ public class Bot extends TelegramLongPollingBot {
                 new TransferExcel()
         );
         transferMessagesServiceEXCEL.transferExcel();
-        COUNT_ROW++;
 
         if(input.equals("/dump")){
             // даем выгрузить только определённым пользователям бота
