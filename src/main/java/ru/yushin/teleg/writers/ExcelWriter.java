@@ -51,9 +51,10 @@ public class ExcelWriter implements IWriter {
         // данные берущиеся не из тело сообщения
         insertDataInCellByName("Дата", message.getTime());
         insertDataInCellByName("Монтажник", message.getUserName());
-        insertDataInCellByName("ВСЕГО ЗА ДЕНЬ УСТАНОВЛЕНО ПУ", getTotalInstalled_ПУ(values));
 
         // основные данные из тела сообщения
+        insertDataInCellByName("ВСЕГО ЗА ДЕНЬ УСТАНОВЛЕНО ПУ", getTotalInstalled_ПУ(values));
+
         for(String line : values){
             String cellName = line.split("-")[0].trim();
             String valueToInsert = line.split("-")[1].trim();
