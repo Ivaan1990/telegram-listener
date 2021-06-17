@@ -49,16 +49,16 @@ public class ExcelWriter implements IWriter {
         createRowAndCells();
 
         // данные берущиеся не из тело сообщения
-        insterDataInCellByName("Дата", message.getTime());
-        insterDataInCellByName("Монтажник", message.getUserName());
-        insterDataInCellByName("ВСЕГО ЗА ДЕНЬ УСТАНОВЛЕНО ПУ", getTotalInstalled_ПУ(values));
+        insertDataInCellByName("Дата", message.getTime());
+        insertDataInCellByName("Монтажник", message.getUserName());
+        insertDataInCellByName("ВСЕГО ЗА ДЕНЬ УСТАНОВЛЕНО ПУ", getTotalInstalled_ПУ(values));
 
         // основные данные из тела сообщения
         for(String line : values){
             String cellName = line.split("-")[0].trim();
             String valueToInsert = line.split("-")[1].trim();
 
-            insterDataInCellByName(cellName, valueToInsert);
+            insertDataInCellByName(cellName, valueToInsert);
         }
     }
 
@@ -112,7 +112,7 @@ public class ExcelWriter implements IWriter {
      * @param data текст для записи в ячейку
      * @throws IOException
      */
-    private void insterDataInCellByName(String name, String data) {
+    private void insertDataInCellByName(String name, String data) {
         try{
             FileInputStream inputStream = new FileInputStream(FILE_NAME);
             XSSFWorkbook workBook = new XSSFWorkbook(inputStream);

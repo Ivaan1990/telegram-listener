@@ -39,7 +39,7 @@ public class Message {
     }
 
     public String getUserName() {
-        return userName;
+        return Names.getRealName(userName);
     }
 
     public String getTime() {
