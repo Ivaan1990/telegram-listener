@@ -91,7 +91,7 @@ public class ExcelWriter implements IWriter {
                     COUNT_ROW++;
                 } else {
                     sheet.createRow(COUNT_ROW);
-                    for (int i = 0; i < 13; i++) {
+                    for (int i = 0; i < 14; i++) {
                         sheet.getRow(COUNT_ROW).createCell(i);
                     }
                     break;
