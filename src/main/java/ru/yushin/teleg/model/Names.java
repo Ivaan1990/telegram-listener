@@ -15,6 +15,11 @@ public class Names {
     }
 
     static String getRealName(String fakeName){
-        return fakeName == null ? fakeName : names.get(fakeName);
+        for(String key : names.keySet()){
+            if(fakeName.equalsIgnoreCase(key)){
+                return names.get(key);
+            }
+        }
+        return fakeName;
     }
 }
