@@ -71,7 +71,8 @@ public class ExcelWriter implements IWriter {
         return String.valueOf(
                 Integer.parseInt(values[1].split("-")[1].trim()) +
                 Integer.parseInt(values[2].split("-")[1].trim()) +
-                Integer.parseInt(values[3].split("-")[1].trim()));
+                Integer.parseInt(values[3].split("-")[1].trim())
+        );
     }
 
     /**
