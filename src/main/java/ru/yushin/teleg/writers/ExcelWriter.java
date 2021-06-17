@@ -48,12 +48,30 @@ public class ExcelWriter implements IWriter {
 
         createRowAndCells();
 
+        // данные берущиеся не из тело сообщения
+        insterDataInCellByName("Дата", message.getTime());
+        insterDataInCellByName("Монтажник", message.getUserName());
+        insterDataInCellByName("ВСЕГО ЗА ДЕНЬ УСТАНОВЛЕНО ПУ", getTotalInstalled_ПУ(values));
+
+        // основные данные из тела сообщения
         for(String line : values){
             String cellName = line.split("-")[0].trim();
             String valueToInsert = line.split("-")[1].trim();
 
             insterDataInCellByName(cellName, valueToInsert);
         }
+    }
+
+    /**
+     *
+     * @param values тело сообщения из телеги, берём 1, 2 и 3 строчки сообщения, там инфа по установленным ПУ
+     * @return
+     */
+    private String getTotalInstalled_ПУ(String[] values){
+        return String.valueOf(
+                Integer.parseInt(values[1].split("-")[1].trim()) +
+                Integer.parseInt(values[2].split("-")[1].trim()) +
+                Integer.parseInt(values[3].split("-")[1].trim()));
     }
 
     /**
@@ -94,7 +112,7 @@ public class ExcelWriter implements IWriter {
      * @param data текст для записи в ячейку
      * @throws IOException
      */
-    public void insterDataInCellByName(String name, String data) {
+    private void insterDataInCellByName(String name, String data) {
         try{
             FileInputStream inputStream = new FileInputStream(FILE_NAME);
             XSSFWorkbook workBook = new XSSFWorkbook(inputStream);
