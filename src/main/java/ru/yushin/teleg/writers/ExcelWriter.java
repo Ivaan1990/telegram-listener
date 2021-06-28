@@ -4,8 +4,7 @@ import ru.yushin.teleg.model.ExcelModel;
 import ru.yushin.teleg.model.Message;
 
 public class ExcelWriter extends ExcelEngine implements IWriter {
-
-    Message message; // сообщение из телеграм чата
+    Message message;
     ExcelModel excelModel;
 
     public void write(Message message) {
