@@ -48,10 +48,8 @@ public class Bot extends TelegramLongPollingBot {
         transferMessagesServiceTXT.transferInTextFile();
 
         // отправим в excel файл
-        transferMessagesServiceEXCEL = new TransferMessagesService(
-                new Message(userName, Util.getCurrentTime(), input),
-                new TransferExcel()
-        );
+        message = new Message(userName, input);
+        transferMessagesServiceEXCEL = new TransferMessagesService(message, new TransferExcel());
         transferMessagesServiceEXCEL.transferExcel();
 
         if(input.equals("/dump")){
