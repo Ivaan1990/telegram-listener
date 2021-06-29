@@ -8,7 +8,7 @@ public class Names {
 
     static {
         names.put("Ivan Evgenievich", "Иван Евгеньевич");
-        names.put("", "");
+        names.put("Георгий null", "Георгий Гусев");
         names.put("", "");
         names.put("", "");
         names.put("", "");

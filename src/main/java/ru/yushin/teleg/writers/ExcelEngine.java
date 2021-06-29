@@ -1,7 +1,6 @@
 package ru.yushin.teleg.writers;
 
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import ru.yushin.teleg.model.Message;
@@ -11,7 +10,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public abstract class ExcelEngine {
@@ -22,7 +20,7 @@ public abstract class ExcelEngine {
 
     static {
         columsNames = new HashMap<String, Integer>();
-        columsNames.put("Дата", 0);
+        columsNames.put("ДАТА", 0);
         columsNames.put("Адрес", 1);
         columsNames.put("Монтажник", 2);
         columsNames.put("Установлено ПУ 1Т", 3);
@@ -107,7 +105,7 @@ public abstract class ExcelEngine {
     }
 
     /**
-     *
+     * //todo сделать формулу в excel файле
      * @param values тело сообщения из телеги, берём 1, 2 и 3 строчки сообщения, там инфа по установленным ПУ
      * @return
      */

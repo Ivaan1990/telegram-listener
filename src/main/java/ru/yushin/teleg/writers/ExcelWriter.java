@@ -20,12 +20,18 @@ public class ExcelWriter extends ExcelEngine implements IWriter {
         insertDataInCellByName("Монтажник", message.getUserName());
 
         // основные данные из тела сообщения
-        insertDataInCellByName("Дата", message.getTime());
+        insertDataInCellByName("ДАТА", message.getTime());
         insertDataInCellByName("ВСЕГО ЗА ДЕНЬ УСТАНОВЛЕНО ПУ", "0");
 
         for(String line : values){
             String cellName = line.split("-")[0].trim();
-            String valueToInsert = line.split("-")[1].trim();
+
+            String valueToInsert = "";
+            try{
+                valueToInsert = line.split("-")[1].trim();
+            } catch (IndexOutOfBoundsException ex){
+                valueToInsert = "0";
+            }
 
             insertDataInCellByName(cellName, valueToInsert);
         }
