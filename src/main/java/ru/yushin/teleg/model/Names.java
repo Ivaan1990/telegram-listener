@@ -7,11 +7,17 @@ public class Names {
     static Map<String, String> names = new HashMap<String, String>();
 
     static {
-        names.put("Ivan Evgenievich", "Иван Евгеньевич");
+        names.put("Ivan Evgenievich", "ADMIN");
         names.put("Георгий null", "Георгий Гусев");
-        names.put("", "");
-        names.put("", "");
-        names.put("", "");
+        names.put("Ефимов И. Г. Вомифе", "");
+        names.put("Вадим", "");
+        names.put("АНДРЕЙ", "");
+        names.put("Иван Тюрин", "Иван Тюрин");
+        names.put("Денис Клевцов", "Денис Клевцов");
+        names.put("Артур", "");
+        names.put("Камакин Николай", "Николай Камакин");
+        names.put("Demidov Andrey", "Андрей Демидов");
+        names.put("Евгений Евгений", "");
     }
 
     static String getRealName(String fakeName){
