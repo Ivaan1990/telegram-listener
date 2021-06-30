@@ -15,6 +15,7 @@ import java.util.Map;
 public abstract class ExcelEngine {
 
     protected static final String FILE_NAME = "actual.xlsx";
+    //protected static final String FILE_NAME = "C://Users//79586//Desktop//Alex//soft//wallp.xlsx";
     protected static int COUNT_ROW = 1;
     protected static Map<String, Integer> columsNames;
 
@@ -104,21 +105,30 @@ public abstract class ExcelEngine {
         }
     }
 
-    /**
-     * //todo сделать формулу в excel файле
-     * @param values тело сообщения из телеги, берём 1, 2 и 3 строчки сообщения, там инфа по установленным ПУ
-     * @return
-     */
-    private String getTotalInstalled_ПУ(String[] values){
-        try {
-            return String.valueOf(
-                    Integer.parseInt(values[1].split("-")[1].trim()) +
-                            Integer.parseInt(values[2].split("-")[1].trim()) +
-                            Integer.parseInt(values[3].split("-")[1].trim())
-            );
-        } catch (ArrayIndexOutOfBoundsException ex){
+    protected String getDataFromCellByName(String name){
+        String value = "";
 
+        try{
+            FileInputStream inputStream = new FileInputStream(FILE_NAME);
+            XSSFWorkbook workBook = new XSSFWorkbook(inputStream);
+            Sheet sheet = workBook.getSheetAt(0);
+
+            Cell cell;
+            cell = sheet.getRow(COUNT_ROW).getCell(columsNames.get(name));
+            value = cell.getRichStringCellValue().toString();
+
+            inputStream.close();
+
+            FileOutputStream outFile = new FileOutputStream(new File(FILE_NAME));
+            workBook.write(outFile);
+            outFile.close();
+        } catch (IOException ex){
+            // отправим в текстовый файл сообщение о том, что при записи в excel возникли проблемы :(
+            new TxtWriter().write(
+                    new Message("ADMIN",
+                            String.format("[не удалось загрузить данные [%s][%s] в excel]", name, value))
+            );
         }
-        return String.valueOf("-1");
+        return value;
     }
 }

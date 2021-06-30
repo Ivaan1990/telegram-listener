@@ -6,7 +6,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.yushin.teleg.model.Message;
 import ru.yushin.teleg.transfer.TransferExcel;
 import ru.yushin.teleg.transfer.TransferMessagesService;
-import ru.yushin.teleg.transfer.TransferTxt;
 
 
 /**
@@ -41,14 +40,8 @@ public class Bot extends TelegramLongPollingBot {
         // получим first + last name пользователя
         String userName = Util.getFirstAndLastNameReceiverMessage(update);
 
-        Message message = new Message(userName, Util.getCurrentTime(), input);
-
-        // сразу отправим в текстовый файл всю инфу по сообщению (от кого, время,  сам текст)
-        transferMessagesServiceTXT = new TransferMessagesService(message, new TransferTxt());
-        transferMessagesServiceTXT.transferInTextFile();
-
         // отправим в excel файл
-        message = new Message(userName, input);
+        Message message = new Message(userName, input);
         transferMessagesServiceEXCEL = new TransferMessagesService(message, new TransferExcel());
         transferMessagesServiceEXCEL.transferExcel();
 

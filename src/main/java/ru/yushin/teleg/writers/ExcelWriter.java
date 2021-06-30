@@ -19,14 +19,13 @@ public class ExcelWriter extends ExcelEngine implements IWriter {
         // напишем в excel настоящее имя монтажника вместо его ника в телеграме
         insertDataInCellByName("Монтажник", message.getUserName());
 
-        // основные данные из тела сообщения
-        insertDataInCellByName("ДАТА", message.getTime());
-        insertDataInCellByName("ВСЕГО ЗА ДЕНЬ УСТАНОВЛЕНО ПУ", "0");
+        //парсим сообщение
+        for(int i = 0; i < values.length; i++){
 
-        for(String line : values){
-            String cellName = line.split("-")[0].trim();
-
+            String line = values[i];
             String valueToInsert = "";
+
+            String cellName = line.split("-")[0].trim();
             try{
                 valueToInsert = line.split("-")[1].trim();
             } catch (IndexOutOfBoundsException ex){
