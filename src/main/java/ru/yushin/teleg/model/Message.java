@@ -5,7 +5,6 @@ public class Message {
     String userName;
     String time;
     String value;
-    int row; // тут хранится номер строки в который будет производится запись
 
     public Message(String userName, String time, String value) {
         this.userName = userName;
@@ -21,17 +20,6 @@ public class Message {
     public Message(String userName, String value){
         this.userName = userName;
         this.value = value;
-    }
-
-    /**
-     * Конструктор для excel
-     * @param userName
-     * @param value сервисное сообщение
-     */
-    public Message(String userName, String value, int row){
-        this.userName = userName;
-        this.value = value;
-        this.row = row;
     }
 
     public String[] evaluateValue(){
@@ -50,7 +38,4 @@ public class Message {
         return value;
     }
 
-    public int getRow() {
-        return row;
-    }
 }

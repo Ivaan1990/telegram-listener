@@ -1,4 +1,4 @@
-package ru.yushin.teleg.teleg;
+package ru.yushin.teleg.bot;
 
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -20,6 +20,7 @@ public class Bot extends TelegramLongPollingBot {
 
     TransferMessagesService transferMessagesServiceTXT;
     TransferMessagesService transferMessagesServiceEXCEL;
+    Message message;
 
     public String getBotUsername() {
         return BOT_NAME;
@@ -40,23 +41,33 @@ public class Bot extends TelegramLongPollingBot {
         // получим first + last name пользователя
         String userName = Util.getFirstAndLastNameReceiverMessage(update);
 
-        // отправим в excel файл
-        Message message = new Message(userName, input);
-        transferMessagesServiceEXCEL = new TransferMessagesService(message, new TransferExcel());
-        transferMessagesServiceEXCEL.transferExcel();
+        // отправим в excel файл если это сообщение от монтажника
+        if(input.contains("Установлено ПУ 1Т") || input.contains("Установлено ПУ 2Т")){
+            message = new Message(userName, input);
+            transferMessagesServiceEXCEL = new TransferMessagesService(message, new TransferExcel());
+            transferMessagesServiceEXCEL.transferExcel();
+        }
 
+        doSomethingCommand(input, chatIdReceivedUser);
+    }
+
+    /**
+     *
+     * @param input текст сообщения
+     * @param chatIdReceivedUser айди чата кому отправить
+     */
+    public void doSomethingCommand(String input, String chatIdReceivedUser){
         if(input.equals("/dump")){
             // даем выгрузить только определённым пользователям бота
             if(chatIdReceivedUser.equals(ADMIN_CHAT_ID)){
                 System.out.println("Выгрузить файлы");
                 Util.sendMessageInChat("Dumping...", ADMIN_CHAT_ID);
 
-                Message dumpLogging = new Message(userName, "!!! Выполнена команда /dump !!!");
+                Message dumpLogging = new Message(message.getUserName(), "!!! Выполнена команда /dump !!!");
                 transferMessagesServiceTXT.transferInTextFile(dumpLogging);
             } else {
                 System.err.println("Доступ к выгрузке Отсутствует!");
             }
         }
     }
-
 }

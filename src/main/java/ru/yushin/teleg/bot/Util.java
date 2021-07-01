@@ -1,4 +1,4 @@
-package ru.yushin.teleg.teleg;
+package ru.yushin.teleg.bot;
 
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -7,7 +7,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import static ru.yushin.teleg.teleg.Bot.BOT_TOKEN;
+import static ru.yushin.teleg.bot.Bot.BOT_TOKEN;
 
 
 /**
@@ -29,7 +29,7 @@ public class Util {
      * @param text строка которую хотим отправить в какой либо чат
      * @param chatId айдишник чата куда хотим отправить text
      */
-   static public void sendMessageInChat(String text, String chatId) {
+    public static void sendMessageInChat(String text, String chatId) {
        /**
         * Как отправить запрос Telegram bot API?
         * https://coderoad.ru/31197659/%D0%9A%D0%B0%D0%BA-%D0%BE%D1%82%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81-Telegram-bot-API
@@ -67,7 +67,7 @@ public class Util {
      *
      * @return текущее время
      */
-    static String getCurrentTime(){
+    public static String getCurrentTime(){
         return new SimpleDateFormat("dd.MM.yyyy").format(new Date());
     }
 }
