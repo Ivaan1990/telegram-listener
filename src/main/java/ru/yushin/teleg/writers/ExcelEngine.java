@@ -99,7 +99,7 @@ public abstract class ExcelEngine {
         } catch (IOException ex){
             // отправим в текстовый файл сообщение о том, что при записи в excel возникли проблемы :(
             new TxtWriter().write(
-                    new Message("ADMIN",
+                    new Message("ERROR SCHEDULER",
                             String.format("[не удалось загрузить данные [%s][%s] в excel]", name, data))
             );
         }
