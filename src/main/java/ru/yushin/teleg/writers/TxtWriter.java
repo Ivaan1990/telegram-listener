@@ -11,7 +11,7 @@ public class TxtWriter implements IWriter{
     private static final String SENDER = "Отправитель:[%s] ";
     private static final String SEND_TIME = "время:[%s] ";
     private static final String MESSAGE_BODY = "сообщение: %s";
-    private static final String LOG_FILE_NAME = "messagesLogs.txt";
+    private static final String LOG_FILE_NAME = "log.txt";
 
     public void write(Message message){
         FileWriter fileWriter;

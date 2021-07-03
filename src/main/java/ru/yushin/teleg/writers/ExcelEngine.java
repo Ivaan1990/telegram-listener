@@ -105,6 +105,11 @@ public abstract class ExcelEngine {
         }
     }
 
+    /**
+     * пока работает только с числовыми значениями.
+     * @param name номер столбца
+     * @return содержимое ячейки
+     */
     protected String getDataFromCellByName(String name){
         String value = "";
 
@@ -115,20 +120,25 @@ public abstract class ExcelEngine {
 
             Cell cell;
             cell = sheet.getRow(COUNT_ROW).getCell(columsNames.get(name));
-            value = cell.getRichStringCellValue().toString();
+            value = cell.getRichStringCellValue().toString().replaceAll("[^0-9\\\\+]", "");
 
             inputStream.close();
 
             FileOutputStream outFile = new FileOutputStream(new File(FILE_NAME));
             workBook.write(outFile);
             outFile.close();
-        } catch (IOException ex){
-            // отправим в текстовый файл сообщение о том, что при записи в excel возникли проблемы :(
-            new TxtWriter().write(
-                    new Message("ADMIN",
-                            String.format("[не удалось загрузить данные [%s][%s] в excel]", name, value))
-            );
-        }
+
+        } catch (IOException ex){}
+
         return value;
+    }
+
+    public String getSumOfInstalledPY(){
+        return String.valueOf(Integer.parseInt(getDataFromCellByName("Установлено ПУ 1Т"))
+                + Integer.parseInt(getDataFromCellByName("Установлено ПУ 2Т"))
+                + Integer.parseInt(getDataFromCellByName("Установлено ПУ 3Т"))
+                + Integer.parseInt(getDataFromCellByName("Установлено ПУ 3Ф 1Т"))
+                + Integer.parseInt(getDataFromCellByName("Установлено ПУ 3Ф 2Т"))
+                + Integer.parseInt(getDataFromCellByName("Установлено ПУ 3Ф 3Т")));
     }
 }
