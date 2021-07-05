@@ -23,9 +23,11 @@ public class ExcelWriter extends ExcelEngine implements IWriter {
         // создадим строку перед заполнением
         createRowAndCells();
 
-        insertDataInCellByName("Монтажник", message.getUserName());
-        insertDataInCellByName("Адрес", values[1].split("-")[1].trim());
         insertDataInCellByName("ДАТА", Util.getCurrentTime());
+
+        insertDataInCellByName("Монтажник", message.getUserName());
+
+        insertDataInCellByName("Адрес", values[1].split("-")[1].trim());
 
         //парсим сообщение
         for(int i = 2; i < values.length; i++){
@@ -34,7 +36,11 @@ public class ExcelWriter extends ExcelEngine implements IWriter {
 
             String cellName = line.split("-")[0].trim();
             try{
-                valueToInsert = line.split("-")[1].trim();
+
+                valueToInsert = line.split("-")[1]
+                        .trim()
+                        .replaceAll("[^0-9\\\\+]", "");
+
             } catch (IndexOutOfBoundsException ex){
                 valueToInsert = "0";
             }
