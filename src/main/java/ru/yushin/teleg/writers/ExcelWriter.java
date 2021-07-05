@@ -23,14 +23,12 @@ public class ExcelWriter extends ExcelEngine implements IWriter {
         // создадим строку перед заполнением
         createRowAndCells();
 
-        // напишем в excel настоящее имя монтажника вместо его ника в телеграме
         insertDataInCellByName("Монтажник", message.getUserName());
-
-        // обработка ошибки ДАТА
-        int j = zaglushka(message.getUserName());
+        insertDataInCellByName("Адрес", values[1].split("-")[1].trim());
+        insertDataInCellByName("ДАТА", Util.getCurrentTime());
 
         //парсим сообщение
-        for(int i = j; i < values.length; i++){
+        for(int i = 2; i < values.length; i++){
             String line = values[i];
             String valueToInsert = "";
 
@@ -45,20 +43,6 @@ public class ExcelWriter extends ExcelEngine implements IWriter {
         }
 
         insertDataInCellByName("ВСЕГО ЗА ДЕНЬ УСТАНОВЛЕНО ПУ", getSumOfInstalledPY());
-    }
-
-    /**
-     *
-     * @param userName принимает имя отправителя сообщения
-     * @return возвращает число с какой по счету строки начинать отсчет
-     * сделано против сообщений с неверным формитированием строки с датой, пример: ДАТА 01 0721 Кулаков
-     */
-    private int zaglushka(String userName){
-        if(userName.equalsIgnoreCase("Андрей Кулаков") || userName.equalsIgnoreCase("Алексей Лазарев")){
-            insertDataInCellByName("ДАТА", Util.getCurrentTime());
-            return 1;
-        }
-        return 0;
     }
 
 }
