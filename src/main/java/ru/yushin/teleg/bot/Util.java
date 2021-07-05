@@ -78,9 +78,14 @@ public class Util {
      * @param chatId айдишник чата
      * @param file файл который хотим отправить
      */
-    public static void sendDocument(String chatId, File file){
+    public static void sendDocumentToUser(String chatId, File file) throws IOException {
+
+        FileInputStream fileInputStream = new FileInputStream(file);
+
         SendDocument sendDocument = new SendDocument();
-        InputFile inputFile = new InputFile(file);
-        sendDocument.setDocument(inputFile);
+        sendDocument.setChatId(chatId);
+        sendDocument.setDocument(new InputFile(fileInputStream, String.format("report [%s]", Util.getCurrentTime())));
+
+        fileInputStream.close();
     }
 }
