@@ -20,17 +20,8 @@ public class Bot extends TelegramLongPollingBot {
     static final String BOT_NAME = "VigryzkaProd_bot";
     static final String ADMIN_CHAT_ID = "266119069";
 
-    TransferMessagesService transferMessagesServiceTXT;
     TransferMessagesService transferMessagesServiceEXCEL;
     Message message;
-
-    public String getBotUsername() {
-        return BOT_NAME;
-    }
-
-    public String getBotToken() {
-        return BOT_TOKEN;
-    }
 
     public void onUpdateReceived(Update update) {
 
@@ -75,5 +66,13 @@ public class Bot extends TelegramLongPollingBot {
                 System.err.println("Доступ к выгрузке Отсутствует!");
             }
         }
+    }
+
+    public String getBotUsername() {
+        return BOT_NAME;
+    }
+
+    public String getBotToken() {
+        return BOT_TOKEN;
     }
 }
