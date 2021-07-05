@@ -3,6 +3,8 @@ package ru.yushin.teleg.writers;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import ru.yushin.teleg.model.Message;
 
 import java.io.File;
@@ -132,7 +134,7 @@ public abstract class ExcelEngine {
         return value;
     }
 
-    public String getSumOfInstalledPY(){
+    protected String getSumOfInstalledPY(){
         return String.valueOf(Integer.parseInt(getDataFromCellByName("Установлено ПУ 1Т"))
                 + Integer.parseInt(getDataFromCellByName("Установлено ПУ 2Т"))
                 + Integer.parseInt(getDataFromCellByName("Установлено ПУ 3Т"))

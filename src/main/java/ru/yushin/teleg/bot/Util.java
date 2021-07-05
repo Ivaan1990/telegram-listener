@@ -1,5 +1,7 @@
 package ru.yushin.teleg.bot;
 
+import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.io.*;
@@ -69,5 +71,16 @@ public class Util {
      */
     public static String getCurrentTime(){
         return new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+    }
+
+    /**
+     * TODO
+     * @param chatId айдишник чата
+     * @param file файл который хотим отправить
+     */
+    public static void sendDocument(String chatId, File file){
+        SendDocument sendDocument = new SendDocument();
+        InputFile inputFile = new InputFile(file);
+        sendDocument.setDocument(inputFile);
     }
 }

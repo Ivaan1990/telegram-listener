@@ -7,6 +7,8 @@ import ru.yushin.teleg.model.Message;
 import ru.yushin.teleg.transfer.TransferExcel;
 import ru.yushin.teleg.transfer.TransferMessagesService;
 
+import java.io.File;
+
 
 /**
  *
@@ -48,7 +50,7 @@ public class Bot extends TelegramLongPollingBot {
             transferMessagesServiceEXCEL.transferExcel();
         }
 
-        doSomethingCommand(input, chatIdReceivedUser);
+        commandToSendExcel(update, input, chatIdReceivedUser);
     }
 
     /**
@@ -56,15 +58,19 @@ public class Bot extends TelegramLongPollingBot {
      * @param input текст сообщения
      * @param chatIdReceivedUser айди чата кому отправить
      */
-    public void doSomethingCommand(String input, String chatIdReceivedUser){
+    public void commandToSendExcel(Update update, String input, String chatIdReceivedUser){
         if(input.equals("/dump")){
-            // даем выгрузить только определённым пользователям бота
+
+            // отправим сообшение с excel файлом Александру
             if(chatIdReceivedUser.equals(ADMIN_CHAT_ID)){
-                System.out.println("Выгрузить файлы");
+
+                Util.sendDocument(
+                        update.getMessage().getChat().getId().toString(),
+                        new File("actual.xlsx")
+                );
+
                 Util.sendMessageInChat("Dumping...", ADMIN_CHAT_ID);
 
-                Message dumpLogging = new Message(message.getUserName(), "!!! Выполнена команда /dump !!!");
-                transferMessagesServiceTXT.transferInTextFile(dumpLogging);
             } else {
                 System.err.println("Доступ к выгрузке Отсутствует!");
             }
