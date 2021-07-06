@@ -22,6 +22,14 @@ public class Message {
         this.value = value;
     }
 
+    /**
+     *
+     * @param value
+     */
+    public Message(String value) {
+        this.value = value;
+    }
+
     public String[] evaluateValue(){
         return value.split("\n");
     }
