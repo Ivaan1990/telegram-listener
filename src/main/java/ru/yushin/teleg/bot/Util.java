@@ -1,14 +1,13 @@
 package ru.yushin.teleg.bot;
 
-import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
-import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
-
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static ru.yushin.teleg.bot.Bot.ADMIN_CHAT;
 import static ru.yushin.teleg.bot.Bot.BOT_TOKEN;
 
 
@@ -23,7 +22,8 @@ public class Util {
      * @return текст последнего сообщения полученного ботом
      */
     static String getMessage(Update update){
-        return update.getMessage().getText();
+        String message = update.getMessage().getText();
+        return message == null ? "" : message;
     }
 
     /**
@@ -74,18 +74,62 @@ public class Util {
     }
 
     /**
-     * TODO
-     * @param chatId айдишник чата
-     * @param file файл который хотим отправить
+     * TODO отправим excel файл
      */
-    public static void sendDocumentToUser(String chatId, File file) throws IOException {
+    public static void sendDocumentToUser() throws IOException {
+        // получить file_id из log.txt
+        String fileId = getFileIdFromLogFile();
 
-        FileInputStream fileInputStream = new FileInputStream(file);
-
-        SendDocument sendDocument = new SendDocument();
-        sendDocument.setChatId(chatId);
-        sendDocument.setDocument(new InputFile(fileInputStream, String.format("report [%s]", Util.getCurrentTime())));
-
-        fileInputStream.close();
+        // получим этот файл с сервера телеги, и отправим его Александру
+        getFileFromTelegramApiByFileId(fileId);
     }
+
+    /**
+     *
+     * @return file_id отчёта, который пока отправляется руками
+     * @throws IOException
+     */
+    private static String getFileIdFromLogFile() throws IOException{
+        String fileId;
+        BufferedReader br = new BufferedReader(new FileReader("log.txt"));
+        try {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                line = br.readLine();
+            }
+            fileId = sb.toString();
+        } finally {
+            br.close();
+        }
+        return fileId.split("=")[1];
+    }
+
+    /**
+     *
+     * @param fileId документа на сервере телеги, отправим его заказчику
+     */
+    private static void getFileFromTelegramApiByFileId(String fileId) {
+
+        String urlString = String.format("https://api.telegram.org/bot%s/sendDocument?chat_id=%s&document=%s", BOT_TOKEN, ADMIN_CHAT, fileId);
+        try{
+            URL url = new URL(urlString);
+            URLConnection conn = url.openConnection();
+            StringBuilder sb = new StringBuilder();
+            InputStream is = null;
+
+            is = new BufferedInputStream(conn.getInputStream());
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String inputLine = "";
+            while ((inputLine = br.readLine()) != null) {
+                sb.append(inputLine);
+            }
+            String response = sb.toString();
+            System.out.println(response);
+        } catch (IOException ex){}
+    }
+
 }
