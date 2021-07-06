@@ -40,6 +40,7 @@ public class ExcelWriter extends ExcelEngine implements IWriter {
                 valueToInsert = line.split("-")[1]
                         .trim()
                         .replaceAll("[^0-9\\\\+]", "");
+                if(valueToInsert.length() == 0) valueToInsert = "0";
 
             } catch (IndexOutOfBoundsException ex){
                 valueToInsert = "0";

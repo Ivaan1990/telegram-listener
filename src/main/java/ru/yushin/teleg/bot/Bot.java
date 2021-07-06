@@ -2,15 +2,10 @@ package ru.yushin.teleg.bot;
 
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.yushin.teleg.model.Message;
-import ru.yushin.teleg.model.Names;
 import ru.yushin.teleg.transfer.TransferExcel;
 import ru.yushin.teleg.transfer.TransferMessagesService;
-
-import java.io.File;
-import java.io.IOException;
 
 
 /**
@@ -58,15 +53,6 @@ public class Bot extends TelegramLongPollingBot {
 
                 if(chatIdReceivedUser.equalsIgnoreCase("-592971739")){
                     Util.sendMessageInChat(String.format("Пользователю [%s] выгружается отчет.", userName), chatIdReceivedUser);
-                    try {
-                        Util.sendDocumentToUser(
-                                chatIdReceivedUser,
-                                new File("actual.xlsx")
-                        );
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
                 }
         }
     }
