@@ -7,8 +7,7 @@ import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static ru.yushin.teleg.bot.Bot.ADMIN_CHAT;
-import static ru.yushin.teleg.bot.Bot.BOT_TOKEN;
+import static ru.yushin.teleg.bot.Bot.*;
 
 
 /**
@@ -32,10 +31,6 @@ public class Util {
      * @param chatId айдишник чата куда хотим отправить text
      */
     public static void sendMessageInChat(String text, String chatId) {
-       /**
-        * Как отправить запрос Telegram bot API?
-        * https://coderoad.ru/31197659/%D0%9A%D0%B0%D0%BA-%D0%BE%D1%82%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81-Telegram-bot-API
-        */
         String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
         urlString = String.format(urlString, BOT_TOKEN, chatId, text);
         try {
@@ -74,14 +69,15 @@ public class Util {
     }
 
     /**
-     * TODO отправим excel файл
+     *
+     * @param chatIdReceivedUser айди чата куда отправим actual.xlsx
      */
-    public static void sendDocumentToUser() throws IOException {
+    public static void sendDocumentToUser(String chatIdReceivedUser) throws IOException {
         // получить file_id из log.txt
         String fileId = getFileIdFromLogFile();
 
         // получим этот файл с сервера телеги, и отправим его Александру
-        getFileFromTelegramApiByFileId(fileId);
+        getFileFromTelegramApiByFileId(chatIdReceivedUser, fileId);
     }
 
     /**
@@ -109,11 +105,12 @@ public class Util {
 
     /**
      *
+     * @param chatIdReceivedUser
      * @param fileId документа на сервере телеги, отправим его заказчику
      */
-    private static void getFileFromTelegramApiByFileId(String fileId) {
+    private static void getFileFromTelegramApiByFileId(String chatIdReceivedUser, String fileId) {
 
-        String urlString = String.format("https://api.telegram.org/bot%s/sendDocument?chat_id=%s&document=%s", BOT_TOKEN, ADMIN_CHAT, fileId);
+        String urlString = String.format("https://api.telegram.org/bot%s/sendDocument?chat_id=%s&document=%s", BOT_TOKEN, chatIdReceivedUser, fileId);
         try{
             URL url = new URL(urlString);
             URLConnection conn = url.openConnection();

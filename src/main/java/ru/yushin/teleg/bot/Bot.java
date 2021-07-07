@@ -52,7 +52,7 @@ public class Bot extends TelegramLongPollingBot {
         if(document != null && document.getFileName().equalsIgnoreCase("actual.xlsx")){
             String fileId = document.getFileId();
             transferMessagesServiceLOG = new TransferMessagesService(
-                    new Message(String.format("file_id=%s", fileId)),
+                    new Message(String.format("time[%s]file_id=%s", Util.getCurrentTime(), fileId)),
                     new TransferTxt()
             );
 
@@ -72,7 +72,7 @@ public class Bot extends TelegramLongPollingBot {
                     Util.sendMessageInChat(String.format("Пользователю [%s] выгружается отчет.", userName), chatIdReceivedUser);
 
                     try {
-                        Util.sendDocumentToUser();
+                        Util.sendDocumentToUser(chatIdReceivedUser);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
