@@ -49,14 +49,16 @@ public class Bot extends TelegramLongPollingBot {
     private void checkForDocumentUpload(Update update){
         TransferMessagesService transferMessagesServiceLOG;
         Document document = update.getMessage().getDocument();
-        if(document != null && document.getFileName().equalsIgnoreCase("actual.xlsx")){
-            String fileId = document.getFileId();
-            transferMessagesServiceLOG = new TransferMessagesService(
-                    new Message(String.format("time[%s]file_id=%s", Util.getCurrentTime(), fileId)),
-                    new TransferTxt()
-            );
+        if(document != null){
+            if(document.getFileName().equalsIgnoreCase("actual.xlsx")){
+                String fileId = document.getFileId();
+                transferMessagesServiceLOG = new TransferMessagesService(
+                        new Message(fileId),
+                        new TransferTxt()
+                );
 
-            transferMessagesServiceLOG.transferInTextFile();
+                transferMessagesServiceLOG.transferInTextFile();
+            }
         }
     }
 

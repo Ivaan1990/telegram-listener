@@ -1,16 +1,14 @@
 package ru.yushin.teleg.writers;
 
-import ru.yushin.teleg.model.ExcelModel;
+import ru.yushin.teleg.eval.Evaluate;
 import ru.yushin.teleg.model.Message;
 import ru.yushin.teleg.bot.Util;
 
 public class ExcelWriter extends ExcelEngine implements IWriter {
     Message message;
-    ExcelModel excelModel;
 
     public void write(Message message) {
         this.message = message;
-        excelModel = new ExcelModel(message);
         sendDataInExcelFile();
     }
 
@@ -18,7 +16,7 @@ public class ExcelWriter extends ExcelEngine implements IWriter {
      * Запись данных в эксель файл
      */
     private void sendDataInExcelFile(){
-        String[] values = excelModel.getValuesFromMessage();
+        Evaluate evaluator = new Evaluate(message.evaluateValue());
 
         // создадим строку перед заполнением
         createRowAndCells();
@@ -27,11 +25,11 @@ public class ExcelWriter extends ExcelEngine implements IWriter {
 
         insertDataInCellByName("Монтажник", message.getUserName());
 
-        insertDataInCellByName("Адрес", values[1].split("-")[1].trim());
+        insertDataInCellByName("Адрес", evaluator.getAddress());
 
         //парсим сообщение
-        for(int i = 2; i < values.length; i++){
-            String line = values[i];
+        for(int i = 2; i < evaluator.getValues().length; i++){
+            String line = evaluator.getValues()[i];
             String valueToInsert = "";
 
             String cellName = line.split("-")[0].trim();

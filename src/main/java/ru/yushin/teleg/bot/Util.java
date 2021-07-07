@@ -35,19 +35,20 @@ public class Util {
         urlString = String.format(urlString, BOT_TOKEN, chatId, text);
         try {
             URL url = new URL(urlString);
-            URLConnection conn = url.openConnection();
-            StringBuilder sb = new StringBuilder();
-            InputStream is = null;
+            URLConnection connection = url.openConnection();
+            StringBuilder builder = new StringBuilder();
+            InputStream inputStream = null;
 
-            is = new BufferedInputStream(conn.getInputStream());
+            inputStream = new BufferedInputStream(connection.getInputStream());
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String inputLine = "";
-            while ((inputLine = br.readLine()) != null) {
-                sb.append(inputLine);
+            while ((inputLine = bufferedReader.readLine()) != null) {
+                builder.append(inputLine);
             }
-            String response = sb.toString();
+            String response = builder.toString();
             System.out.println(response);
+            System.out.println("\n");
         } catch (IOException ex){}
     }
 
@@ -87,20 +88,22 @@ public class Util {
      */
     private static String getFileIdFromLogFile() throws IOException{
         String fileId;
-        BufferedReader br = new BufferedReader(new FileReader("log.txt"));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("log.txt"));
         try {
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
+            StringBuilder builder = new StringBuilder();
+            String line = bufferedReader.readLine();
 
             while (line != null) {
-                sb.append(line);
-                line = br.readLine();
+                builder.append(line);
+                line = bufferedReader.readLine();
             }
-            fileId = sb.toString();
+            fileId = builder.toString();
         } finally {
-            br.close();
+            bufferedReader.close();
         }
-        return fileId.split("=")[1];
+
+        String[] arr = fileId.split("время");
+        return arr[arr.length-1].split("=")[1];
     }
 
     /**
@@ -109,23 +112,24 @@ public class Util {
      * @param fileId документа на сервере телеги, отправим его заказчику
      */
     private static void getFileFromTelegramApiByFileId(String chatIdReceivedUser, String fileId) {
-
         String urlString = String.format("https://api.telegram.org/bot%s/sendDocument?chat_id=%s&document=%s", BOT_TOKEN, chatIdReceivedUser, fileId);
-        try{
+
+        try {
             URL url = new URL(urlString);
-            URLConnection conn = url.openConnection();
-            StringBuilder sb = new StringBuilder();
-            InputStream is = null;
+            URLConnection connection = url.openConnection();
+            StringBuilder builder = new StringBuilder();
+            InputStream inputStream = null;
 
-            is = new BufferedInputStream(conn.getInputStream());
+            inputStream = new BufferedInputStream(connection.getInputStream());
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String inputLine = "";
-            while ((inputLine = br.readLine()) != null) {
-                sb.append(inputLine);
+            while ((inputLine = bufferedReader.readLine()) != null) {
+                builder.append(inputLine);
             }
-            String response = sb.toString();
+            String response = builder.toString();
             System.out.println(response);
+            System.out.println("\n");
         } catch (IOException ex){}
     }
 
