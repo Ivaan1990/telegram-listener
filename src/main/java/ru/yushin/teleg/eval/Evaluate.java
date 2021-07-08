@@ -4,6 +4,8 @@ package ru.yushin.teleg.eval;
  * Класс представляющий обработчик ошибок в сообщениях от пользователей.
  */
 public class Evaluate {
+    public static final String REG_EXP_PATTERN = "[^0-9\\\\+]";
+
     String[] values;
 
     public Evaluate(String[] values) {
@@ -32,7 +34,7 @@ public class Evaluate {
      */
     public String eval3F3T(String line){
         String parseLine = line.replaceAll("Установлено ПУ 3Ф 3Т –", "");
-        return parseLine.replaceAll("[^0-9\\\\+]", "").length() != 0 ? parseLine : "0";
+        return parseLine.replaceAll(REG_EXP_PATTERN, "").length() != 0 ? parseLine : "0";
     }
 
     /**
