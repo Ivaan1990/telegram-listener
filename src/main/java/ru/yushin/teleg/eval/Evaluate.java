@@ -1,11 +1,8 @@
 package ru.yushin.teleg.eval;
 
 
-import ru.yushin.teleg.model.Message;
-
 public class Evaluate {
     String[] values;
-    Message message;
 
     public Evaluate(String[] values) {
         this.values = values;
@@ -21,6 +18,7 @@ public class Evaluate {
         try {
             return address.split("-")[1].trim();
         } catch (IndexOutOfBoundsException ex){
+            //todo заресплейсить АДРЕС Адрес
             return address;
         }
 

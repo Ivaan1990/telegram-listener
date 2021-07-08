@@ -23,7 +23,7 @@ public class Message {
     }
 
     /**
-     *
+     * Конструктор для сохранения file_id отправленного файла в log.txt
      * @param value
      */
     public Message(String value) {
