@@ -19,6 +19,7 @@ public class Names {
         names.put("Demidov Andrey", "Андрей Демидов");
         names.put("Евгений Евгений", "Евгений Ермолаев");
         names.put("Алексей Лазарев", "Алексей Лазарев");
+        names.put("Евгений null", "Евгений Галин");
     }
 
     static String getRealName(String fakeName){
