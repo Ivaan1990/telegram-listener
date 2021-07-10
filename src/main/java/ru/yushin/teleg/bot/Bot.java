@@ -36,6 +36,7 @@ public class Bot extends TelegramLongPollingBot {
         // отправим в excel файл если это сообщение от монтажника
         if(input.contains("Установлено ПУ 1Т") || input.contains("Установлено ПУ 2Т")){
             message = new Message(userName, input);
+            System.out.println(input);
             transferMessagesServiceEXCEL = new TransferMessagesService(message, new TransferExcel());
             transferMessagesServiceEXCEL.transferExcel();
         }

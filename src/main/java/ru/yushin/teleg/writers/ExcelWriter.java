@@ -41,9 +41,21 @@ public class ExcelWriter extends ExcelEngine implements IWriter {
                 if(valueToInsert.length() == 0) valueToInsert = "0";
 
             } catch (IndexOutOfBoundsException ex){
+                // todo ужасный костыль, избавится
+
                 if(line.contains("–")){
-                    insertDataInCellByName("Установлено ПУ 3Ф 3Т", evaluator.eval3F3T(line));
-                    continue;
+
+                    String[] arr = line.split("–");
+                    if(arr.length > 1){
+                        cellName = arr[0].trim();
+                        valueToInsert = arr[1].replaceAll(Evaluate.REG_EXP_PATTERN, "");
+                        insertDataInCellByName(cellName, valueToInsert);
+                        continue;
+                    } else {
+                        valueToInsert = "0";
+                        cellName = arr[0].trim();
+                    }
+
                 } else {
                     valueToInsert = "0";
                 }
