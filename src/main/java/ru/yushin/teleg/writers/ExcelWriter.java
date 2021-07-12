@@ -41,7 +41,7 @@ public class ExcelWriter extends ExcelEngine implements IWriter {
                 if(valueToInsert.length() == 0) valueToInsert = "0";
 
             } catch (IndexOutOfBoundsException ex){
-                // todo ужасный костыль, избавится
+            //-- todo ужасный костыль, избавится
 
                 if(line.contains("–")){
 
@@ -59,7 +59,7 @@ public class ExcelWriter extends ExcelEngine implements IWriter {
                 } else {
                     valueToInsert = "0";
                 }
-            }
+            }//--
 
             insertDataInCellByName(cellName, valueToInsert);
         }
