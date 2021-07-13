@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * PostgersSQL todo подключить
+ */
 public class PostgresSql extends AbstractDataBase{
 
     String connectionPath = "jdbc:sqlserver";

@@ -1,7 +1,7 @@
 package ru.yushin.teleg.transfer;
 
 
-import ru.yushin.teleg.model.Message;
+import ru.yushin.teleg.transfer.model.Message;
 
 public interface ITransfer {
     /**

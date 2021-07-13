@@ -1,7 +1,7 @@
-package ru.yushin.teleg.writers;
+package ru.yushin.teleg.transfer.writers;
 
 import ru.yushin.teleg.eval.Evaluate;
-import ru.yushin.teleg.model.Message;
+import ru.yushin.teleg.transfer.model.Message;
 import ru.yushin.teleg.bot.Util;
 
 public class ExcelWriter extends ExcelEngine implements IWriter {

@@ -1,9 +1,9 @@
 package ru.yushin.teleg.transfer;
 
 
-import ru.yushin.teleg.model.Message;
-import ru.yushin.teleg.writers.IWriter;
-import ru.yushin.teleg.writers.TxtWriter;
+import ru.yushin.teleg.transfer.model.Message;
+import ru.yushin.teleg.transfer.writers.IWriter;
+import ru.yushin.teleg.transfer.writers.TxtWriter;
 
 /**
  * Класс отвечает за загрузку текста в файл формата .txt

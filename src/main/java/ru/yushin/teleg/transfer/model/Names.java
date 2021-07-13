@@ -1,4 +1,4 @@
-package ru.yushin.teleg.model;
+package ru.yushin.teleg.transfer.model;
 
 import java.util.HashMap;
 import java.util.Map;

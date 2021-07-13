@@ -1,7 +1,7 @@
-package ru.yushin.teleg.writers;
+package ru.yushin.teleg.transfer.writers;
 
 
-import ru.yushin.teleg.model.Message;
+import ru.yushin.teleg.transfer.model.Message;
 
 /**
  * Интерфейс для записи информации в файлы формата .txt .xlsx

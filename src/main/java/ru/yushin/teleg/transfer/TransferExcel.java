@@ -1,9 +1,9 @@
 package ru.yushin.teleg.transfer;
 
 
-import ru.yushin.teleg.model.Message;
-import ru.yushin.teleg.writers.ExcelWriter;
-import ru.yushin.teleg.writers.IWriter;
+import ru.yushin.teleg.transfer.model.Message;
+import ru.yushin.teleg.transfer.writers.ExcelWriter;
+import ru.yushin.teleg.transfer.writers.IWriter;
 
 /**
  * Класс отвечает за передачу данных в файл формата excel

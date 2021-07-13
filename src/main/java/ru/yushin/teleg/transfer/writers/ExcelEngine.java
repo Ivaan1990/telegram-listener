@@ -1,9 +1,9 @@
-package ru.yushin.teleg.writers;
+package ru.yushin.teleg.transfer.writers;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import ru.yushin.teleg.model.Message;
+import ru.yushin.teleg.transfer.model.Message;
 
 import java.io.File;
 import java.io.FileInputStream;

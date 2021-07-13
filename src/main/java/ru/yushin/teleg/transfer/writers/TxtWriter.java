@@ -1,5 +1,5 @@
-package ru.yushin.teleg.writers;
-import ru.yushin.teleg.model.Message;
+package ru.yushin.teleg.transfer.writers;
+import ru.yushin.teleg.transfer.model.Message;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;

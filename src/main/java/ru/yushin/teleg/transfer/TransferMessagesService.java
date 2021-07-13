@@ -1,7 +1,7 @@
 package ru.yushin.teleg.transfer;
 
 
-import ru.yushin.teleg.model.Message;
+import ru.yushin.teleg.transfer.model.Message;
 
 /**
  * Сервис для передачи сообщений в сторонние ресурсы txt, html, excel...etc
@@ -37,6 +37,10 @@ public class TransferMessagesService {
      * Отправим текст сообщения в excel файл
      */
     public void transferExcel(){
+        blankTransfer.transfer(message);
+    }
+
+    public void transferDataBase(){
         blankTransfer.transfer(message);
     }
 }

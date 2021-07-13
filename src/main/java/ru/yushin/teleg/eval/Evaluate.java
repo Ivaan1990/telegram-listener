@@ -28,16 +28,6 @@ public class Evaluate {
     }
 
     /**
-     * Костыль от какого-то странного символа, который пишет Андрей Корнеев
-     * @param line строка содержащая Установлено ПУ 3Ф 3Т –,
-     * @return
-     */
-    public String eval3F3T(String line){
-        String parseLine = line.replaceAll("Установлено ПУ 3Ф 3Т –", "");
-        return parseLine.replaceAll(REG_EXP_PATTERN, "").length() != 0 ? parseLine : "0";
-    }
-
-    /**
      * //-- для случая, если в адресе присутствует '-'
      * @param address
      * @return

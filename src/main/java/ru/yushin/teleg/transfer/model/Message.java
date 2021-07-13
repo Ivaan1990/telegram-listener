@@ -1,4 +1,4 @@
-package ru.yushin.teleg.model;
+package ru.yushin.teleg.transfer.model;
 
 public class Message {
 

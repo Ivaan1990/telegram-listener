@@ -3,10 +3,7 @@ package ru.yushin.teleg.bot;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Document;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.yushin.teleg.db.DataBaseService;
-import ru.yushin.teleg.db.DataBaseServiceImpl;
-import ru.yushin.teleg.db.PostgresSql;
-import ru.yushin.teleg.model.Message;
+import ru.yushin.teleg.transfer.model.Message;
 import ru.yushin.teleg.transfer.TransferExcel;
 import ru.yushin.teleg.transfer.TransferMessagesService;
 import ru.yushin.teleg.transfer.TransferTxt;
@@ -19,19 +16,13 @@ public class Bot extends TelegramLongPollingBot {
     static final String REPORT_CHAT = "-592971739";
     static final String ADMIN_CHAT = "-526991630";
 
-    //-- База данных PostgresSQL -//
-    static DataBaseService dataBaseService;
-    static PostgresSql postgresSql;
-
     TransferMessagesService transferMessagesServiceEXCEL;
+    TransferMessagesService transferMessagesServiceDataBase;
     Message message;
-//
-//    static {
-//        postgresSql =  new PostgresSql();
-//        dataBaseService = new DataBaseServiceImpl(postgresSql);
-//    }
 
     public void onUpdateReceived(Update update) {
+        // если отправлен документ, сохраним его file_id в log.txt
+        checkForDocumentUpload(update);
 
         // получить id чата отправителя сообщения
         String chatIdReceivedUser = update.getMessage().getChat().getId().toString();
@@ -42,15 +33,15 @@ public class Bot extends TelegramLongPollingBot {
         // получим first + last name пользователя
         String userName = Util.getFirstAndLastNameReceiverMessage(update);
 
-        // если отправлен документ, сохраним его file_id в log.txt
-        checkForDocumentUpload(update);
-
         // отправим в excel файл если это сообщение от монтажника
         if(input.contains("Установлено ПУ 1Т") || input.contains("Установлено ПУ 2Т")){
             message = new Message(userName, input);
             System.out.println(input);
             transferMessagesServiceEXCEL = new TransferMessagesService(message, new TransferExcel());
             transferMessagesServiceEXCEL.transferExcel();
+
+            //transferMessagesServiceDataBase = new TransferMessagesService(message, new TransferDb());
+            //transferMessagesServiceDataBase.transferDataBase();
         }
         commandToSendExcel(input, chatIdReceivedUser, userName);
     }
