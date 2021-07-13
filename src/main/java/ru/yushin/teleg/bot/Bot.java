@@ -3,6 +3,9 @@ package ru.yushin.teleg.bot;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Document;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.yushin.teleg.db.DataBaseService;
+import ru.yushin.teleg.db.DataBaseServiceImpl;
+import ru.yushin.teleg.db.PostgresSql;
 import ru.yushin.teleg.model.Message;
 import ru.yushin.teleg.transfer.TransferExcel;
 import ru.yushin.teleg.transfer.TransferMessagesService;
@@ -16,8 +19,17 @@ public class Bot extends TelegramLongPollingBot {
     static final String REPORT_CHAT = "-592971739";
     static final String ADMIN_CHAT = "-526991630";
 
+    //-- База данных PostgresSQL -//
+    static DataBaseService dataBaseService;
+    static PostgresSql postgresSql;
+
     TransferMessagesService transferMessagesServiceEXCEL;
     Message message;
+//
+//    static {
+//        postgresSql =  new PostgresSql();
+//        dataBaseService = new DataBaseServiceImpl(postgresSql);
+//    }
 
     public void onUpdateReceived(Update update) {
 
