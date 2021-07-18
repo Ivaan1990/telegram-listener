@@ -31,6 +31,7 @@ public class ExcelWriter extends ExcelEngine implements IWriter {
         for(int i = 2; i < evaluator.getValues().length; i++){
             String line = evaluator.getValues()[i];
             String valueToInsert = "";
+            double valueToInsertDouble = 0;
 
             String cellName = line.split("-")[0].trim();
             try{
@@ -40,6 +41,7 @@ public class ExcelWriter extends ExcelEngine implements IWriter {
                         .replaceAll(Evaluate.REG_EXP_PATTERN, "");
                 if(valueToInsert.length() == 0) valueToInsert = "0";
 
+                valueToInsertDouble = Double.parseDouble(valueToInsert);
             } catch (IndexOutOfBoundsException ex){
             //-- todo ужасный костыль, избавится
 
@@ -49,19 +51,25 @@ public class ExcelWriter extends ExcelEngine implements IWriter {
                     if(arr.length > 1){
                         cellName = arr[0].trim();
                         valueToInsert = arr[1].replaceAll(Evaluate.REG_EXP_PATTERN, "");
-                        insertDataInCellByName(cellName, valueToInsert);
+                        valueToInsertDouble = Double.parseDouble(valueToInsert);
+
+                        insertDataInCellByName(cellName, valueToInsertDouble);
+                        //insertDataInCellByName(cellName, valueToInsert);
                         continue;
                     } else {
                         valueToInsert = "0";
+                        valueToInsertDouble = Double.parseDouble(valueToInsert);
                         cellName = arr[0].trim();
                     }
 
                 } else {
                     valueToInsert = "0";
+                    valueToInsertDouble = Double.parseDouble(valueToInsert);
                 }
             }//--
 
-            insertDataInCellByName(cellName, valueToInsert);
+            insertDataInCellByName(cellName, valueToInsertDouble);
+            //insertDataInCellByName(cellName, valueToInsert);
         }
 
         insertDataInCellByName("ВСЕГО ЗА ДЕНЬ УСТАНОВЛЕНО ПУ", getSumOfInstalledPY());

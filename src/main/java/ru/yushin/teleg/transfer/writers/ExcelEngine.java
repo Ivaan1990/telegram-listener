@@ -1,7 +1,9 @@
 package ru.yushin.teleg.transfer.writers;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import ru.yushin.teleg.transfer.model.Message;
 
@@ -14,7 +16,7 @@ import java.util.Map;
 
 public abstract class ExcelEngine {
 
-    protected static final String FILE_NAME = "actual.xlsx";
+    protected static final String FILE_NAME = "testTable.xlsx";
     protected static int COUNT_ROW = 1;
     protected static Map<String, Integer> columsNames;
 
@@ -105,13 +107,12 @@ public abstract class ExcelEngine {
     }
 
     /**
-     * пока работает только с числовыми значениями.
-     * @param name номер столбца
-     * @return содержимое ячейки
+     *
+     * @param name имя столбца в excel файле
+     * @param data текст для записи в ячейку
+     * @throws IOException
      */
-    protected String getDataFromCellByName(String name){
-        String value = "";
-
+    protected void insertDataInCellByName(String name, double data) {
         try{
             FileInputStream inputStream = new FileInputStream(FILE_NAME);
             XSSFWorkbook workBook = new XSSFWorkbook(inputStream);
@@ -119,9 +120,39 @@ public abstract class ExcelEngine {
 
             Cell cell;
             cell = sheet.getRow(COUNT_ROW).getCell(columsNames.get(name));
-            value = cell.getRichStringCellValue().toString().replaceAll("[^0-9\\\\+]", "");
+            cell.setCellValue(data);
 
             inputStream.close();
+
+            FileOutputStream outFile = new FileOutputStream(new File(FILE_NAME));
+            workBook.write(outFile);
+            outFile.close();
+        } catch (IOException ex){
+            // отправим в текстовый файл сообщение о том, что при записи в excel возникли проблемы :(
+            new TxtWriter().write(
+                    new Message("ERROR SCHEDULER",
+                            String.format("[не удалось загрузить данные [%s][%s] в excel]", name, data))
+            );
+        }
+    }
+
+    /**
+     * пока работает только с числовыми значениями.
+     * @param name номер столбца
+     * @return содержимое ячейки
+     */
+    protected double getDataFromCellByName(String name){
+        String value = "";
+        Cell cell = null;
+        try{
+            FileInputStream inputStream = new FileInputStream(FILE_NAME);
+            XSSFWorkbook workBook = new XSSFWorkbook(inputStream);
+            Sheet sheet = workBook.getSheetAt(0);
+
+
+            cell = sheet.getRow(COUNT_ROW).getCell(columsNames.get(name));
+//            value = cell.getRichStringCellValue().toString().replaceAll("[^0-9\\\\+]", "");
+//            inputStream.close();
 
             FileOutputStream outFile = new FileOutputStream(new File(FILE_NAME));
             workBook.write(outFile);
@@ -129,15 +160,15 @@ public abstract class ExcelEngine {
 
         } catch (IOException ex){}
 
-        return value;
+        return cell == null ? 0.0 : cell.getNumericCellValue();
     }
 
-    protected String getSumOfInstalledPY(){
-        return String.valueOf(Integer.parseInt(getDataFromCellByName("Установлено ПУ 1Т"))
-                + Integer.parseInt(getDataFromCellByName("Установлено ПУ 2Т"))
-                + Integer.parseInt(getDataFromCellByName("Установлено ПУ 3Т"))
-                + Integer.parseInt(getDataFromCellByName("Установлено ПУ 3Ф 1Т"))
-                + Integer.parseInt(getDataFromCellByName("Установлено ПУ 3Ф 2Т"))
-                + Integer.parseInt(getDataFromCellByName("Установлено ПУ 3Ф 3Т")));
+    protected double getSumOfInstalledPY(){
+        return getDataFromCellByName("Установлено ПУ 1Т") +
+                getDataFromCellByName("Установлено ПУ 2Т") +
+                getDataFromCellByName("Установлено ПУ 3Т") +
+                getDataFromCellByName("Установлено ПУ 3Ф 1Т") +
+                getDataFromCellByName("Установлено ПУ 3Ф 2Т") +
+                getDataFromCellByName("Установлено ПУ 3Ф 3Т");
     }
 }
